@@ -1,6 +1,21 @@
 Flask
+Flask-SocketIO
+Flask-JWT-Extended
 Flask-SQLAlchemy
+Authlib
 python-dotenv
-pytest
+requests
 gunicorn
+pytest
 flasgger
+
+# Socket.IO Dependencies
+python-socketio
+python-engineio
+simple-websocket
+
+# SQLAlchemy Dependency
+sqlalchemy
+
+# Cryptography for Authlib
+cryptography
