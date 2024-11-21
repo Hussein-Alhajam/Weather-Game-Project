@@ -1,14 +1,11 @@
 import requests
-from config import Config
-from flask import request
 import logging
+from config import Config
 
 logging.basicConfig(level=logging.INFO)
 
-def get_user_ip():
-    return request.headers.get('X-Forwarded-For', request.remote_addr)
-
 def get_location_from_ip(ip_address):
+    """Fetches the user's location from IP address."""
     url = f'http://ipinfo.io/{ip_address}/json?token={Config.IPINFO_TOKEN}'
     try:
         response = requests.get(url)
@@ -20,6 +17,7 @@ def get_location_from_ip(ip_address):
         return None
 
 def get_real_weather(location):
+    """Fetches weather data based on location."""
     url = f'http://api.weatherapi.com/v1/current.json?key={Config.WEATHER_API_KEY}&q={location}'
     try:
         response = requests.get(url)

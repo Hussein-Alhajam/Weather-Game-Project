@@ -1,23 +1,11 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
-from authlib.integrations.flask_client import OAuth
+from extensions import db
 from models.user_model import User
-from app import db, app
 import logging
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
-
-# Initialize OAuth
-oauth = OAuth(app)
-google = oauth.register(
-    name='google',
-    client_id=app.config['GOOGLE_CLIENT_ID'],
-    client_secret=app.config['GOOGLE_CLIENT_SECRET'],
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    client_kwargs={'scope': 'openid email profile'},
-)
 
 def register_user(username, password):
     try:
@@ -30,7 +18,23 @@ def register_user(username, password):
         db.session.rollback()
         logging.error(f"Error registering user {username}: {e}")
 
-def handle_google_callback():
+# Login User
+def login_user(username, password):
+    try:
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
+            token = create_access_token(identity=user.id)
+            logging.info(f"User {username} logged in successfully.")
+            return token
+        else:
+            logging.warning(f"Login failed for user {username}: Invalid credentials.")
+            return None
+    except Exception as e:
+        logging.error(f"Error during login for user {username}: {e}")
+        return None
+
+# Handle Google OAuth Callback
+def handle_google_callback(google):
     try:
         token = google.authorize_access_token()
         user_info = google.parse_id_token(token)
