@@ -38,14 +38,6 @@ def login():
         logging.error(f"Error during login: {e}")
         return jsonify({'msg': 'Error during login'}), 500
 
-@auth_bp.route('/login/google', methods=['GET'])
-def login_with_google():
-    try:
-        return google.authorize_redirect(redirect_uri='/auth/callback')
-    except Exception as e:
-        logging.error(f"Error starting Google login: {e}")
-        return jsonify({'msg': 'Error starting Google login'}), 500
-
 @auth_bp.route('/auth/callback')
 def oauth_callback():
     try:
