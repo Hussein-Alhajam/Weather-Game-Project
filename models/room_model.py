@@ -6,4 +6,3 @@ class GameRoom(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
     # Relationship with users (many users can belong to a room)
-    users = db.relationship('User', backref='game_room', lazy=True)
