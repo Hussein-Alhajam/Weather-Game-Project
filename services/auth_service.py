@@ -23,7 +23,8 @@ def login_user(username, password):
     try:
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
-            token = create_access_token(identity=user.id)
+            # Convert user ID to a string explicitly
+            token = create_access_token(identity=user.username, additional_claims={"user_id": user.id})
             logging.info(f"User {username} logged in successfully.")
             return token
         else:

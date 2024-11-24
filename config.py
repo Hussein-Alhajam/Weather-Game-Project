@@ -3,7 +3,6 @@ import os
 class Config:
     # Weather and IP information
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or '37052376f3e84317b1f54312243110'
-    IPINFO_TOKEN = os.environ.get('IPINFO_TOKEN') or 'your_ipinfo_token'
     
     # Secret Keys
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'supersecretkey'

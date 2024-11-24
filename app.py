@@ -16,15 +16,6 @@ socketio.init_app(app)
 oauth.init_app(app)
 jwt = JWTManager(app)
 
-# Register Google OAuth provider
-google = oauth.register(
-    name='google',
-    client_id=app.config['GOOGLE_CLIENT_ID'],
-    client_secret=app.config['GOOGLE_CLIENT_SECRET'],
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    client_kwargs={'scope': 'openid email profile'},
-)
 
 # Register Blueprints for routes
 app.register_blueprint(auth_bp, url_prefix='/auth')
