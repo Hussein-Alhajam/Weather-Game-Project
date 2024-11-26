@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session, url_for
 from services.auth_service import register_user, login_user, handle_google_callback
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from extensions import google
 import logging
+import os
 
 auth_bp = Blueprint('auth', __name__)
 logging.basicConfig(level=logging.INFO)
@@ -40,17 +41,15 @@ def login():
 
 @auth_bp.route('/login/google', methods=['GET'])
 def login_with_google():
-    try:
-        return google.authorize_redirect(redirect_uri='/auth/callback')
-    except Exception as e:
-        logging.error(f"Error starting Google login: {e}")
-        return jsonify({'msg': 'Error starting Google login'}), 500
+    nonce = os.urandom(16).hex()  # Randomly generate a nonce
+    session['nonce'] = nonce
+    redirect_uri = url_for('auth.oauth_callback', _external=True)
+    return google.authorize_redirect(redirect_uri, nonce=nonce)
 
-@auth_bp.route('/auth/callback')
+@auth_bp.route('/callback', methods=['GET'])
 def oauth_callback():
     try:
-        # Pass `google` to handle the Google callback
-        token = handle_google_callback(google)
+        token = handle_google_callback()
         if token:
             return jsonify({'access_token': token}), 200
         logging.warning("Google OAuth failed: No token received")
