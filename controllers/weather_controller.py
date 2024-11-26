@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from services.weather_service import get_location_from_ip, get_weather_for_location
 import logging
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt, jwt_required, get_jwt_identity
 
 weather_bp = Blueprint('weather', __name__)
 logging.basicConfig(level=logging.INFO)
@@ -12,7 +12,8 @@ def current_weather():
     """API endpoint to fetch weather data for the user’s current location."""
     # Get the current user's identity from the JWT token
     user_identity = get_jwt_identity()
-    
+    claims = get_jwt()
+    user_id = claims.get("user_id")
     ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
 
     # If running locally, replace 127.0.0.1 for testing purposes

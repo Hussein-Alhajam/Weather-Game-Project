@@ -16,36 +16,36 @@ def create_room(room_name):
         logging.error(f"Error creating room {room_name}: {e}")
         return None
 
-def join_room(room_id):
+def join_room(room_name):
     try:
         from models.room_model import GameRoom
-        room = GameRoom.query.get(room_id)
+        room = GameRoom.query.get(room_name)
         if room:
             room.is_active = True
             db.session.commit()
-            logging.info(f"Room {room_id} joined successfully.")
+            logging.info(f"Room {room_name} joined successfully.")
             return True
         else:
-            logging.warning(f"Room {room_id} not found.")
+            logging.warning(f"Room {room_name} not found.")
             return False
     except Exception as e:
         db.session.rollback()
-        logging.error(f"Error joining room {room_id}: {e}")
+        logging.error(f"Error joining room {room_name}: {e}")
         return False
 
-def leave_room(room_id):
+def leave_room(room_name):
     try:
         from models.room_model import GameRoom
-        room = GameRoom.query.get(room_id)
+        room = GameRoom.query.get(room_name)
         if room:
             room.is_active = False
             db.session.commit()
-            logging.info(f"Room {room_id} left successfully.")
+            logging.info(f"Room {room_name} left successfully.")
             return True
         else:
-            logging.warning(f"Room {room_id} not found.")
+            logging.warning(f"Room {room_name} not found.")
             return False
     except Exception as e:
         db.session.rollback()
-        logging.error(f"Error leaving room {room_id}: {e}")
+        logging.error(f"Error leaving room {room_name}: {e}")
         return False
