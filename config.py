@@ -8,8 +8,11 @@ class Config:
     # Secret Keys
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'supersecretkey'
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'superjwtsecretkey'
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)  # Setting to control token expiry
-    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
+    
+    # Setting to control token expiry
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)    # Access token expires in 1 hour
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=1)    # Refresh token expires in 1 day
+
     # SQLAlchemy Database Configuration
     SQLALCHEMY_DATABASE_URI = 'sqlite:///game.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

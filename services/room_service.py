@@ -19,7 +19,7 @@ def create_room(room_name):
 def join_room(room_name):
     try:
         from models.room_model import GameRoom
-        room = GameRoom.query.get(room_name)
+        room = GameRoom.query.filter_by(room_name=room_name).first()
         if room:
             room.is_active = True
             db.session.commit()
@@ -36,7 +36,7 @@ def join_room(room_name):
 def leave_room(room_name):
     try:
         from models.room_model import GameRoom
-        room = GameRoom.query.get(room_name)
+        room = GameRoom.query.filter_by(room_name=room_name).first()
         if room:
             room.is_active = False
             db.session.commit()

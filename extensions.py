@@ -4,7 +4,7 @@ from authlib.integrations.flask_client import OAuth
 from config import Config
 
 db = SQLAlchemy()
-socketio = SocketIO()
+socketio = SocketIO(cors_allowed_origins="*")
 oauth = OAuth()
 
 google = oauth.register(
