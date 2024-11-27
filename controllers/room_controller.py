@@ -1,6 +1,7 @@
+from datetime import timedelta
 from flask import Blueprint, request, jsonify
 from services.room_service import create_room, join_room, leave_room
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_socketio import join_room as socket_join_room, leave_room as socket_leave_room, emit
 from extensions import socketio
 import logging
@@ -27,7 +28,7 @@ def create():
 
     username = get_jwt_identity()
     try:
-        room = create_room(room_name, username)
+        room = create_room(room_name)
         if room is None:
             raise Exception("Room creation failed.")
         return jsonify({'msg': f"Room '{room_name}' created successfully", 'room_id': room.id}), 201
@@ -51,7 +52,7 @@ def join():
 
     username = get_jwt_identity()
     try:
-        if not join_room(room_name, username):
+        if not join_room(room_name):
             raise Exception(f"Room '{room_name}' not found or join failed.")
         return jsonify({'msg': f"{username} joined room '{room_name}'"}), 200
     except Exception as e:
@@ -74,7 +75,7 @@ def leave():
 
     username = get_jwt_identity()
     try:
-        if not leave_room(room_name, username):
+        if not leave_room(room_name):
             raise Exception(f"Room '{room_name}' not found or leave failed.")
         return jsonify({'msg': f"{username} left room '{room_name}'"}), 200
     except Exception as e:
@@ -140,3 +141,17 @@ def handle_message(data):
     except Exception as e:
         logging.error(f"Error sending message to room {room}: {e}")
         emit('error', {'message': f'Failed to send message in room {room}.'})
+        
+#refresh token
+@socketio.on("user_action")
+@jwt_required()
+def handle_user_action(data):
+    identity = get_jwt_identity()
+    # Refresh token logic
+    new_token = create_access_token(
+        identity=identity,
+        additional_claims={"user_id": identity},
+        expires_delta=timedelta(hours=1)
+    )
+    emit("token_refresh", {"token": new_token})
+

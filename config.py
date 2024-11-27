@@ -1,3 +1,4 @@
+from datetime import timedelta
 import os
 
 class Config:
@@ -7,14 +8,18 @@ class Config:
     # Secret Keys
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'supersecretkey'
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'superjwtsecretkey'
+    
+    # Setting to control token expiry
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)    # Access token expires in 1 hour
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=1)    # Refresh token expires in 1 day
 
     # SQLAlchemy Database Configuration
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///game.db'  # For local development, use SQLite
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///game.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Google OAuth Configuration
-    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID') or 'your_google_client_id'
-    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET') or 'your_google_client_secret'
+    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID') or '511564159141-sr24p4cdqo7jlrfohv2crlrgepc10ent.apps.googleusercontent.com'
+    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET') or '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'
     GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
     # Ensure essential environment variables are set in production
