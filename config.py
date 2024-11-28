@@ -10,7 +10,7 @@ class Config:
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'superjwtsecretkey'
     
     # Setting to control token expiry
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)    # Access token expires in 1 hour
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=3)    # Access token expires in 3 hour
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=1)    # Refresh token expires in 1 day
 
     # SQLAlchemy Database Configuration
