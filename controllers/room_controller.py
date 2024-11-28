@@ -43,21 +43,26 @@ def join():
     data = request.get_json()
 
     # Validate incoming data
-    if not data or 'room_name' not in data:
-        return jsonify({'msg': 'Room name is required'}), 400
+    if not data or 'room_name' not in data or 'username' not in data:
+        return jsonify({'msg': 'Room name and username are required'}), 400
 
     room_name = data.get('room_name')
+    username = data.get('username')
+
+    # Validate room name and username
     if not isinstance(room_name, str) or not room_name.strip():
         return jsonify({'msg': 'Room name must be a non-empty string'}), 400
+    if not isinstance(username, str) or not username.strip():
+        return jsonify({'msg': 'Username must be a non-empty string'}), 400
 
-    username = get_jwt_identity()
     try:
-        if not join_room(room_name):
+        if not join_room(room_name, username):
             raise Exception(f"Room '{room_name}' not found or join failed.")
         return jsonify({'msg': f"{username} joined room '{room_name}'"}), 200
     except Exception as e:
-        logging.error(f"Error joining room '{room_name}': {e}")
+        logging.error(f"Error joining room '{room_name}' for user '{username}': {e}")
         return jsonify({'msg': 'Error joining room'}), 500
+
 
 @room_bp.route('/leave', methods=['POST'])
 @jwt_required()
