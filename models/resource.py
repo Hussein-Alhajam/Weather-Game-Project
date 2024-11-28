@@ -8,3 +8,13 @@ class Resource(db.Model):
     location_x = db.Column(db.Float, nullable=True)
     location_y = db.Column(db.Float, nullable=True)
     room_id = db.Column(db.Integer, db.ForeignKey('game_room.id'), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "type": self.type,
+            "quantity": self.quantity,
+            "location_x": self.location_x,
+            "location_y": self.location_y,
+            "room_id":self.room_id,
+        }

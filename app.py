@@ -6,6 +6,8 @@ from controllers.auth_controller import auth_bp
 from controllers.room_controller import room_bp
 from controllers.weather_controller import weather_bp
 from controllers.game_mech_controller import game_mech_bp
+from controllers.inventory_controller import inventory_bp
+from controllers.resource_controller import resource_bp
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, verify_jwt_in_request
 from flask_migrate import Migrate
 
@@ -24,6 +26,8 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(room_bp, url_prefix='/room')
 app.register_blueprint(weather_bp, url_prefix='/weather')
 app.register_blueprint(game_mech_bp, url_prefix='/game')
+app.register_blueprint(inventory_bp, url_prefix='/inventory')
+app.register_blueprint(resource_bp, url_prefix='/resource')
 
 
 migrate = Migrate(app, db)

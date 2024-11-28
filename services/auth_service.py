@@ -25,8 +25,8 @@ def login_user(username, password):
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             # Convert user ID to a string explicitly
-            token = create_access_token(identity=user.username, additional_claims={"user_id": user.id})
-            logging.info(f"User {username} logged in successfully.")
+            token = create_access_token(identity=str(user.username), additional_claims={"user_id": str(user.id)})
+            logging.info(f"Login successful for user {username} (ID: {user.id})")
             return token
         else:
             logging.warning(f"Login failed for user {username}: Invalid credentials.")

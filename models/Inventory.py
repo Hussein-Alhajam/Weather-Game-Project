@@ -7,3 +7,11 @@ class Inventory(db.Model):
     resource_id = db.Column(db.Integer, db.ForeignKey('resource.id'), nullable=True)
     item_name = db.Column(db.String(80), nullable=True)  # Crafted items
     quantity = db.Column(db.Integer, default=0)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "item_name": self.item_name,
+            "quantity": self.quantity,
+        }
