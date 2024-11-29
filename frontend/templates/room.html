@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <title>Game Room</title>
+</head>
+<body>
+    <header>
+        <h1>Create or Join a Room</h1>
+    </header>
+    <main>
+        <!-- Create Room -->
+        <form id="create-room-form">
+            <label for="room-name">Room Name:</label>
+            <input type="text" id="room-name" name="room_name" required>
+            <br>
+            <button type="submit">Create Room</button>
+        </form>
+
+        <hr>
+
+        <!-- Join Room -->
+        <form id="join-room-form">
+            <label for="room-id">Room ID:</label>
+            <input type="text" id="room-id" name="room_id" required>
+            <br>
+            <button type="submit">Join Room</button>
+        </form>
+    </main>
+    <footer>
+        <p>© 2024 Survival Game</p>
+    </footer>
+
+    <script>
+        // Handle room creation
+        document.getElementById('create-room-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const roomName = document.getElementById('room-name').value;
+
+            const response = await fetch('/room/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ room_name: roomName }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert(`Room created: ${data.room_id}`);
+                window.location.href = `/lobby?room_id=${data.room_id}`;
+            } else {
+                alert(data.msg);
+            }
+        });
+
+        // Handle room joining
+        document.getElementById('join-room-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const roomId = document.getElementById('room-id').value;
+
+            const response = await fetch(`/room/join/${roomId}`, { method: 'POST' });
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(`Joined room: ${roomId}`);
+                window.location.href = `/lobby?room_id=${roomId}`;
+            } else {
+                alert(data.msg);
+            }
+        });
+    </script>
+</body>
+</html>
