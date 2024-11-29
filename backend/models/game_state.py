@@ -1,5 +1,5 @@
 from datetime import datetime
-from extensions import db
+from backend.extensions import db
 
 class GameRoomState(db.Model):
     __tablename__ = 'game_room_state'

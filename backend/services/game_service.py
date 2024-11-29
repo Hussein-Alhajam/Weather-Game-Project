@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import logging
 import random
-from extensions import db, socketio
+from backend.extensions import db, socketio
 from models.Inventory import Inventory
 from models.game_state import GameRoomState
 from models.player_state import PlayerState

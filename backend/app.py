@@ -1,7 +1,7 @@
 from datetime import timedelta
 from flask import Flask
-from config import Config
-from extensions import db, socketio, oauth
+from backend.config import Config
+from backend.extensions import db, socketio, oauth
 from controllers.auth_controller import auth_bp
 from controllers.room_controller import room_bp
 from controllers.weather_controller import weather_bp

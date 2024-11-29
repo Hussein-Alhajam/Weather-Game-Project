@@ -1,4 +1,4 @@
-from extensions import db
+from backend.extensions import db
 
 class SavedGame(db.Model):
     __tablename__ = 'saved_game'

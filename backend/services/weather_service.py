@@ -1,6 +1,6 @@
 import requests
 import logging
-from config import Config
+from backend.config import Config
 
 logging.basicConfig(level=logging.INFO)
 

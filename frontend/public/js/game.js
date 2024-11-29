@@ -66,6 +66,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Connect to the WebSocket server
+    const socket = io();
+
+    // Handle chat form submission
+    document.getElementById('chat-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const message = document.getElementById('chat-input').value;
+            socket.emit('chat_message', message); // Send message to the server
+        document.getElementById('chat-input').value = ''; // Clear the input field
+});
+
+        // Listen for incoming chat messages
+        socket.on('chat_message', (data) => {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+                messageDiv.textContent = data; // Add the received message
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the latest message
+});
+
     // Save game event
     document.getElementById('save-game').addEventListener('click', async () => {
         try {

@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask import redirect, session, url_for
-from extensions import db, google
+from backend.extensions import db, google
 from models.user_model import User
 import logging
 

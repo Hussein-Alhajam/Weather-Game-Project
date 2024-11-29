@@ -1,5 +1,5 @@
 from datetime import datetime
-from extensions import db
+from backend.extensions import db
 import logging
 
 from models.game_room_model import GameRoom

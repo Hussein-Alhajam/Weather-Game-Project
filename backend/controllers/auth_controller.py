@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, request, jsonify, session, url_for
 from services import auth_service
 from services.auth_service import register_user, login_user, handle_google_callback
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from extensions import google
+from backend.extensions import google
 import logging
 import os
 

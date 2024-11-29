@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify
 from services.room_service import create_room, join_room, leave_room
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_socketio import join_room as socket_join_room, leave_room as socket_leave_room, emit
-from extensions import socketio
+from backend.extensions import socketio
 import logging
 
 logging.basicConfig(level=logging.INFO)
