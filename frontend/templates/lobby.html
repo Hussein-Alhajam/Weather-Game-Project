@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <title>Lobby</title>
+</head>
+<body>
+    <header>
+        <h1>Lobby</h1>
+    </header>
+    <main>
+        <p>Waiting for players to join...</p>
+        <ul id="player-list"></ul>
+        <button id="start-game" disabled>Start Game</button>
+    </main>
+    <footer>
+        <p>© 2024 Survival Game</p>
+    </footer>
+
+    <script>
+        const roomId = new URLSearchParams(window.location.search).get('room_id');
+        const playerList = document.getElementById('player-list');
+        const startGameButton = document.getElementById('start-game');
+
+        async function fetchLobby() {
+            const response = await fetch(`/room/lobby/${roomId}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                playerList.innerHTML = '';
+                data.players.forEach(player => {
+                    const li = document.createElement('li');
+                    li.textContent = player.username;
+                    playerList.appendChild(li);
+                });
+
+                startGameButton.disabled = data.players.length < 2;
+            } else {
+                alert('Failed to fetch lobby data.');
+            }
+        }
+
+        setInterval(fetchLobby, 5000); // Update every 5 seconds
+    </script>
+</body>
+</html>

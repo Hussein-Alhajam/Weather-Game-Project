@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <script src="/public/js/game.js" defer></script>
+    <title>Game Interface</title>
+</head>
+<body class="game">
+    <header>
+        <h1>Survival Game</h1>
+    </header>
+    <main>
+        <section id="player-stats">
+            <h2>Player Stats</h2>
+            <p>Health: <span id="health">Loading...</span></p>
+            <p>Hunger: <span id="hunger">Loading...</span></p>
+            <p>Sanity: <span id="sanity">Loading...</span></p>
+        </section>
+
+        <section id="room-state">
+            <h2>Room State</h2>
+            <p>Time of Day: <span id="time-of-day">Loading...</span></p>
+            <p>Weather: <span id="weather">Loading...</span></p>
+        </section>
+
+        <section id="inventory">
+            <h2>Inventory</h2>
+            <ul id="inventory-list">Loading...</ul>
+        </section>
+
+        <section id="resources">
+            <h2>Resources</h2>
+            <ul id="resource-list">Loading...</ul>
+        </section>
+        
+        <!-- Chatbox -->
+        <section id="chatbox">
+            <h2>Chat</h2>
+            <div id="chat-messages">
+                <!-- Chat messages will appear here -->
+            </div>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type a message..." required>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+
+        <div class="controls">
+            <button id="save-game">Save Game</button>
+            <button id="exit-game">Exit Game</button>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Survival Game</p>
+    </footer>
+</body>
+</html>
