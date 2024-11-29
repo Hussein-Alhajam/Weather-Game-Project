@@ -88,3 +88,6 @@ Add CodeQL analysis and Dependabot for security and dependency management.
 Deployment:
 
 Deploy the app to AWS Elastic Beanstalk with proper SSL configuration
+
+### **Credits**
+1. `Hussein-Alhajam`, 100727390 
